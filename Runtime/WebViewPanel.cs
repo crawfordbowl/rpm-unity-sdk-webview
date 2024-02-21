@@ -14,6 +14,8 @@ namespace ReadyPlayerMe.WebView
         private const string TAG = nameof(WebViewPanel);
 
         [SerializeField] private MessagePanel messagePanel;
+        
+        [SerializeField] private GameObject webviewMask;
 
         [SerializeField] private ScreenPadding screenPadding;
 
@@ -47,6 +49,7 @@ namespace ReadyPlayerMe.WebView
 #endif
             messagePanel.SetMessage(messageType);
             messagePanel.SetVisible(true);
+            webviewMask.SetActive(true);
             SetScreenPadding();
         }
 
@@ -90,6 +93,7 @@ namespace ReadyPlayerMe.WebView
         public void SetVisible(bool visible)
         {
             messagePanel.SetVisible(visible);
+            webviewMask.SetActive(visible);
             if (webViewObject != null)
             {
                 webViewObject.IsVisible = visible;
@@ -115,6 +119,21 @@ namespace ReadyPlayerMe.WebView
         // Set WebView screen padding in pixels.
         private void SetScreenPadding()
         {
+            if (webViewObject)
+            {
+                webViewObject.SetMargins(screenPadding.left, screenPadding.top, screenPadding.right, screenPadding.bottom);
+            }
+
+            messagePanel.SetMargins(screenPadding.left, screenPadding.top, screenPadding.right, screenPadding.bottom);
+        }
+        
+        public void SetScreenPadding(int left,int top,int right,int bottom)
+        {
+            screenPadding.left = left;
+            screenPadding.top = top;
+            screenPadding.right = right;
+            screenPadding.bottom = bottom;
+            
             if (webViewObject)
             {
                 webViewObject.SetMargins(screenPadding.left, screenPadding.top, screenPadding.right, screenPadding.bottom);
